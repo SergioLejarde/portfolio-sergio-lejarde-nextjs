@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-purple-700 to-white flex flex-col items-center justify-center p-8 font-sans">
-      <h1 className="text-4xl font-bold text-white mb-6">My todos</h1>
+      <h1 className="text-4xl font-bold text-white mb-6">MI PORTAFOLIO</h1>
 
       <button
         onClick={() => alert("Agrega lógica si conectas backend luego")}
