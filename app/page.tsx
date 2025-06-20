@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
-import "./../app/app.css";
+import "./../app/global.css"; // Asegúrate que contiene solo @tailwind base, components, utilities
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
@@ -32,18 +32,35 @@ export default function App() {
   }
 
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
+    <main className="min-h-screen bg-gradient-to-b from-purple-700 to-white flex flex-col items-center justify-center p-8 font-sans">
+      <h1 className="text-4xl font-bold text-white mb-6">My todos</h1>
+
+      <button
+        onClick={createTodo}
+        className="mb-4 rounded-md bg-gray-900 text-white px-4 py-2 hover:border-2 hover:border-indigo-400 transition"
+      >
+        + new
+      </button>
+
+      <ul className="bg-black rounded-md overflow-auto divide-y divide-black w-full max-w-md mb-4">
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
+          <li
+            key={todo.id}
+            className="bg-white px-4 py-2 hover:bg-indigo-100 transition"
+          >
+            {todo.content}
+          </li>
         ))}
       </ul>
-      <div>
+
+      <div className="text-center text-sm text-gray-700 mt-4">
         🥳 App successfully hosted. Try creating a new todo.
         <br />
-        <a href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/">
+        <a
+          href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/"
+          className="text-blue-700 font-bold underline"
+          target="_blank"
+        >
           Review next steps of this tutorial.
         </a>
       </div>
