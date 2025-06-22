@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Forzar a Tailwind a incluir estas clases */
+.bg-gradient-to-b {}
+.from-white {}
+.via-gray-400 {}
+.to-black {}
