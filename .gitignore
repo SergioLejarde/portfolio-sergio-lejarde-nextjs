@@ -1,41 +1,40 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# ➤ Dependencias
 /node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
 
-# testing
+# ➤ Tests
 /coverage
 
-# next.js
-/.next/
-/out/
-
-# production
+# ➤ Next.js
+/.next
+/out
 /build
 
-# misc
+# ➤ Archivos del sistema
 .DS_Store
 *.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
+*.log
 *.tsbuildinfo
+*.swp
+*.swo
+
+# ➤ Archivos locales
+.env*
 next-env.d.ts
 
-# amplify
+# ➤ Vercel/Netlify
+.vercel
+.netlify
+
+# ➤ Amplify
 .amplify
+amplify/
 amplify_outputs*
 amplifyconfiguration*
+
+# ➤ Archivos generados o comprimidos
+*.zip
+*.tar.gz
+*.rar
