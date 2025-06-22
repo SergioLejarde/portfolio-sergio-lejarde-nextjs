@@ -1,3 +1,5 @@
+import "./global.css";
+
 export const metadata = {
   title: "Portfolio | Sergio Lejarde",
   description: "Desarrollador Fullstack con enfoque en soluciones web modernas.",
