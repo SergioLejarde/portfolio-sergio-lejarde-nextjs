@@ -1,25 +1,21 @@
-## AWS Amplify Next.js (App Router) Starter Template
+# Proyecto basado en plantilla de AWS Amplify con Next.js
 
-This repository provides a starter template for creating applications using Next.js (App Router) and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+## Pasos recomendados para este proyecto
 
-## Overview
+1. Ingresar a Amplify y buscar una plantilla en Next.js, tambien se puede buscar una en vercel, pero de igual manera hay que configurar, remover o añadir cosas en ambos casos para que funcione y sea optimizado.
 
-This template equips you with a foundational Next.js application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+2. Crear un repositorio con esa plantilla y clonarlo localmente.
 
-## Features
+3. Después de clonarlo localmente, abrir el repositorio.
 
-- **Authentication**: Setup with Amazon Cognito for secure user authentication.
-- **API**: Ready-to-use GraphQL endpoint with AWS AppSync.
-- **Database**: Real-time database powered by Amazon DynamoDB.
+4. Ejecutar el comando:
 
-## Deploying to AWS
+   ```bash
+   npm install
+   ```
 
-For detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/#deploy-a-fullstack-app-to-aws) of our documentation.
+   en la carpeta raíz del proyecto.
 
-## Security
+5. Reiniciar Visual Studio Code. Puede hacerse con la opción **Reload Window** o cerrando y volviendo a abrir la aplicación.
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
-
-## License
-
-This library is licensed under the MIT-0 License. See the LICENSE file.
+6. Una vez reiniciado, ya se pueden escribir y ejecutar cambios en el código sin problemas.

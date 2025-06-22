@@ -1,6 +1,6 @@
 "use client";
 
-import "./../app/global.css"; // Solo Tailwind
+import "./global.css"; // Solo Tailwind
 import "@aws-amplify/ui-react/styles.css";
 
 export default function App() {
