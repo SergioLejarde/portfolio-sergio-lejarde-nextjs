@@ -18,8 +18,9 @@
         "name": "next"
       }
     ],
+    "baseUrl": "./src",               // ✅ Ruta base desde donde se resuelve el alias @
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["*"]                    // ✅ Alias @ apunta a todo lo que esté dentro de /src
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
