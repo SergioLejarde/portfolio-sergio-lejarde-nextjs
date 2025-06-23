@@ -34,6 +34,7 @@ export default function RootLayout({
   )
 }
 
+//archivo #3
 
 /*¿Qué es layout.tsx y para qué sirve?
 layout.tsx es un layout raíz.
@@ -57,3 +58,18 @@ global.css=	Aplica estilos globales como fondo y tipografía
 NoiseBackground= Agrega el fondo animado visual
 children=	Muestra el contenido de cada página
 z-10 y relative=	Asegura que el contenido esté por encima del canvas */
+
+/*¿Qué es SEO y para qué sirve?
+SEO = Search Engine Optimization
+(traducido: optimización para motores de búsqueda)
+
+🎯 ¿Para qué sirve?
+Para que tu sitio aparezca en los resultados de Google (u otros buscadores) cuando alguien busca por tu nombre, proyectos o habilidades.
+
+📦 ¿Qué cosas ayudan al SEO en tu portafolio?
+Elemento::¿Para qué sirve?
+metadata.title=	Es el título que aparece en la pestaña del navegador y en resultados de Google.
+metadata.description=	Descripción corta que se muestra debajo del título en buscadores.
+Encabezados (<h1>, <h2>)=	Le dicen a Google qué es importante en tu página.
+Texto visible (no solo imágenes)=	Ayuda a que Google entienda de qué trata tu sitio.
+Buen rendimiento=	Un sitio rápido mejora tu posición en resultados. */
