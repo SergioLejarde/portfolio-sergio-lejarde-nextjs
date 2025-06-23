@@ -8,7 +8,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className="bg-gradient-to-b from-white via-gray-100 to-black text-white min-h-screen font-sans">
+      <body className="bg-black text-white p-10">
+        <h1 className="text-4xl font-bold text-red-500">¿Tailwind funciona?</h1>
         {children}
       </body>
     </html>

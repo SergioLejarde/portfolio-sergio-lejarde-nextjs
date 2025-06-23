@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Forzar a Tailwind a incluir estas clases */
-.bg-gradient-to-b {}
-.from-white {}
-.via-gray-400 {}
-.to-black {}
+/* Personalización de la fuente base y background oscuro */
+body {
+  @apply bg-black text-white font-sans leading-relaxed;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Personalización básica de los títulos */
+h1, h2, h3, h4 {
+  @apply font-light tracking-wide;
+}
+
+/* Links estilo Keita */
+a {
+  @apply underline decoration-pink-500 hover:decoration-white transition duration-300;
+}
