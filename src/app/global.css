@@ -1,22 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 🎯 Cargamos la fuente monoespaciada usada en el sitio de Keita (o muy similar) */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
 
-/* Personalización de la fuente base y background oscuro */
+/* 🛠️ Cargamos las capas base de Tailwind CSS (requerido para que funcione) */
+@tailwind base;        /* Reset de estilos predeterminados del navegador + tipografías base */
+@tailwind components;  /* Componentes reutilizables si defines algunos en Tailwind */
+@tailwind utilities;   /* Clases utilitarias como bg-black, text-white, p-4, etc */
+
+/* 🧱 Estilos generales para todo el body de la página */
 body {
-  @apply bg-black text-white font-sans leading-relaxed;
+  @apply bg-black;       /* Fondo completamente negro, como el sitio de Keita */
+  @apply text-white;     /* Color de texto blanco para contraste fuerte */
+  @apply font-mono;      /* Fuente monoespaciada para estilo retro / técnico */
+  overflow-x: hidden;    /* Evita que aparezca scroll horizontal si algo se desborda */
 }
 
-html {
-  scroll-behavior: smooth;
+/* 🎚️ Personalizamos la barra de desplazamiento en navegadores tipo WebKit (Chrome, Edge, etc) */
+::-webkit-scrollbar {
+  width: 8px;               /* Ancho del scrollbar */
+}
+::-webkit-scrollbar-track {
+  background: #111;         /* Color del fondo del scroll (gris muy oscuro) */
+}
+::-webkit-scrollbar-thumb {
+  background: #666;         /* Color del "pulgar" (parte móvil del scroll) */
+  border-radius: 8px;       /* Bordes redondeados para un look más moderno */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #999;         /* Color del "pulgar" cuando el mouse pasa por encima */
 }
 
-/* Personalización básica de los títulos */
-h1, h2, h3, h4 {
-  @apply font-light tracking-wide;
-}
+/* ✨ Aquí podríamos definir animaciones globales (como ruido, glitch, etc.) más adelante */
+/* Por ejemplo: keyframes para glitch o animaciones tipo static TV effect */
 
-/* Links estilo Keita */
-a {
-  @apply underline decoration-pink-500 hover:decoration-white transition duration-300;
-}
+/*global.css es el archivo donde definimos los estilos globales que aplican a toda tu app. Aunque usamos Tailwind (que te da utilidades de CSS ya hechas), global.css sigue siendo muy útil para cosas como:
+
+Uso de global.css	Ejemplos:
+Importar fuentes	Google Fonts como IBM Plex Mono
+Estilos base:	Color de fondo general, scrollbars, etc.
+Configuración Tailwind:	@tailwind base, components, utilities
+Animaciones globales: Keyframes que usaremos con clases de Tailwind extendidas*/
+
+/*¿Usarlo es profesional?
+Sí. Incluso en proyectos grandes con Tailwind, siempre hay un global.css. No abusamos de él (no vamos a escribir estilos específicos como .boton-verde), pero sí lo usamos para estilos que deben aplicarse a todo el sitio o para inicializar cosas.*/
+
+/*¿Qué conseguimos con este global.css?
+✅ Fondo oscuro y texto blanco
+✅ Tipografía monoespaciada profesional (como Keita)
+✅ Scroll minimalista
+✅ Estilo visual coherente en toda la app
+✅ Base limpia para aplicar animaciones después*/

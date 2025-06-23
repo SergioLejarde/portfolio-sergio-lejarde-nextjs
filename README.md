@@ -10,7 +10,7 @@
 
 4. Ejecutar el comando:
 
-   ```bash
+   ```powershell
    npm install
    ```
 
@@ -19,3 +19,7 @@
 5. Reiniciar Visual Studio Code. Puede hacerse con la opción **Reload Window** o cerrando y volviendo a abrir la aplicación.
 
 6. Una vez reiniciado, ya se pueden escribir y ejecutar cambios en el código sin problemas.
+
+7. honestamente se le han quitado muchas cosas a la plantilla que daba de ejemplo next en amplify, ya que tenia dependencias y configuraciones innecesarias para solo desplegar front, Además hacia que el despliegue en amplify fuera supremamente lento y demorado.
+
+8. hay que saber instalar tailwind en esta plantilla porque como tiene diferentes versiones de dependencias, que es algo normal en cualquier proyecto, puede dar complicaciones para que tailwind u otros aspectos funcionen y por ende hay que dar con la solucion.
