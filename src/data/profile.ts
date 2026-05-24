@@ -39,11 +39,11 @@ export const strengths = [
 export const experience = [
   {
     role: 'Freelance Programmer',
-    company: 'Clientes académicos y pequeños negocios',
-    period: '2021 - Presente',
-    location: 'Remoto',
+    company: 'Academic and small-business clients',
+    period: '2021 - Present',
+    location: 'Remote',
     summary:
-      'Soluciones web, móviles y de automatización con foco en necesidades reales de clientes y equipos pequeños.',
+      'Custom web, mobile and automation solutions focused on practical needs for small teams and academic clients.',
     highlights: [
       'Desarrollo con JavaScript, Python, Flutter, React, AWS Amplify, Firebase y Render.',
       'Implementación de pipelines con GitHub Actions para reducir tiempos de despliegue en más de 40%.',
@@ -53,10 +53,10 @@ export const experience = [
   {
     role: 'AI Pilot Assistant',
     company: 'Mindrift / Tendem Project',
-    period: '2026 - Presente',
-    location: 'Remoto',
+    period: '2026 - Present',
+    location: 'Remote',
     summary:
-      'Operación de flujos human-in-the-loop para extracción, verificación y refinamiento de datos asistidos por IA.',
+      'Human-in-the-loop workflows for data extraction, verification and refinement in AI-assisted production tasks.',
     highlights: [
       'Validación multi-paso combinando resultados de LLMs con fuentes externas.',
       'Corrección de errores, inconsistencias y alucinaciones mediante QA estructurado.',
@@ -66,10 +66,10 @@ export const experience = [
   {
     role: 'AI Model Evaluator',
     company: 'Outlier / LATAM Coders',
-    period: '2025 - Presente',
-    location: 'Remoto',
+    period: '2025 - Present',
+    location: 'Remote',
     summary:
-      'Evaluación de modelos de lenguaje para calidad, coherencia, seguimiento de instrucciones y razonamiento.',
+      'Language model evaluation for quality, coherence, instruction-following and reasoning reliability.',
     highlights: [
       'Aplicación de guías estrictas alineadas con flujos modernos de entrenamiento y RLHF.',
       'Revisión de respuestas complejas para mejorar confiabilidad y consistencia del modelo.',
@@ -81,7 +81,7 @@ export const experience = [
     period: '2026',
     location: 'Bucaramanga, Colombia',
     summary:
-      'Soporte técnico presencial en un entorno crítico de escrutinio electoral con alta presión operativa.',
+      'On-site technical support in a time-critical electoral scrutiny environment with high operational pressure.',
     highlights: [
       'Resolución de incidentes de hardware, software, red, sincronización y transmisión de datos.',
       'Coordinación con equipos técnicos para escalar eventos críticos y minimizar tiempos de inactividad.',
@@ -130,19 +130,19 @@ export const projects = [
 
 export const skillGroups = [
   {
-    title: 'Lenguajes y frameworks',
+    title: 'Languages and frameworks',
     items: ['TypeScript', 'JavaScript', 'Python', 'Java', 'C#', 'C++', 'Go', 'Swift', 'Dart', 'React', 'Next.js', 'Flutter'],
   },
   {
-    title: 'Cloud, DevOps y datos',
+    title: 'Cloud, DevOps and data',
     items: ['AWS', 'Firebase', 'Render', 'Docker', 'GitHub Actions', 'Linux', 'SQL', 'PostgreSQL', 'MySQL', 'MongoDB', 'Supabase'],
   },
   {
-    title: 'IA, analítica y QA',
+    title: 'AI, analytics and QA',
     items: ['LLM evaluation', 'Prompt strategy', 'Human QA', 'Pandas', 'Matplotlib', 'Scikit-Learn', 'Excel', 'Tableau'],
   },
   {
-    title: 'Producto y herramientas',
+    title: 'Product and tools',
     items: ['UX/UI', 'Figma', 'Adobe XD', 'Canva', 'Accessibility', 'Agile', 'Scrum', 'Jira', 'Trello', 'Postman'],
   },
 ]

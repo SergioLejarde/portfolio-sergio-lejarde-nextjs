@@ -24,12 +24,58 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    linear-gradient(180deg, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 1)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 1)),
     var(--background);
   color: var(--foreground);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
+}
+
+.site-shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, var(--page-bg), var(--page-bg-soft)),
+    var(--page-bg-solid);
+  transition:
+    background-color 240ms ease,
+    color 240ms ease;
+}
+
+.theme-dark {
+  color-scheme: dark;
+  --page-bg: rgba(5, 5, 5, 0.78);
+  --page-bg-soft: rgba(5, 5, 5, 0.92);
+  --page-bg-solid: #050505;
+  --panel: rgba(16, 16, 15, 0.78);
+  --nav-bg: rgba(5, 5, 5, 0.58);
+  --text: #f7f3ea;
+  --soft: #c9c3b8;
+  --muted: #837d73;
+  --line: rgba(247, 243, 234, 0.13);
+  --line-strong: rgba(247, 243, 234, 0.3);
+  --hero-glow: rgba(255, 255, 255, 0.08);
+  --inverse-panel: #f7f3ea;
+  --inverse-text: #070707;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.theme-light {
+  color-scheme: light;
+  --page-bg: rgba(244, 239, 229, 0.86);
+  --page-bg-soft: rgba(244, 239, 229, 0.95);
+  --page-bg-solid: #f4efe5;
+  --panel: rgba(255, 252, 246, 0.72);
+  --nav-bg: rgba(244, 239, 229, 0.62);
+  --text: #171412;
+  --soft: #544e46;
+  --muted: #84796c;
+  --line: rgba(23, 20, 18, 0.14);
+  --line-strong: rgba(23, 20, 18, 0.34);
+  --hero-glow: rgba(255, 255, 255, 0.42);
+  --inverse-panel: #171412;
+  --inverse-text: #f7f3ea;
+  --shadow: 0 24px 80px rgba(54, 45, 34, 0.14);
 }
 
 ::selection {
@@ -57,4 +103,8 @@ body {
 
 .font-mono {
   font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+main {
+  isolation: isolate;
 }

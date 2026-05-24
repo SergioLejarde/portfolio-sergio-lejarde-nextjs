@@ -1,214 +1,362 @@
 'use client'
 
 import Image from 'next/image'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import {
-  contact,
-  education,
-  experience,
-  leadership,
-  metrics,
-  projects,
-  skillGroups,
-  strengths,
-} from '@/data/profile'
+import { contact } from '@/data/profile'
 
-const navItems = [
-  { label: 'Perfil', href: '#perfil' },
-  { label: 'Experiencia', href: '#experiencia' },
-  { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Contacto', href: '#contacto' },
+type Language = 'en' | 'es'
+type Theme = 'dark' | 'light'
+
+const content = {
+  en: {
+    nav: ['Work', 'Capabilities', 'Process', 'Resume'],
+    theme: { dark: 'Dark', light: 'Light' },
+    heroKicker: 'Web Design / Front-end / AI-assisted QA',
+    heroTitle: 'Clean web experiences with a practical engineering backbone.',
+    heroText:
+      'I design and build responsive digital products, marketing pages and product interfaces that are easy to understand, easy to ship and consistent across touchpoints.',
+    available: 'Available for freelance remote work',
+    primaryCta: 'View selected work',
+    secondaryCta: 'Open resume',
+    location: 'Bucaramanga, Colombia',
+    english: 'English B2 / TOEFL',
+    degree: 'Systems Engineering, 2026',
+    workTitle: 'Selected web design cases',
+    workIntro:
+      'Live products and prototypes that show layout decisions, responsive UI, visual hierarchy, product thinking and implementation awareness.',
+    capabilitiesTitle: 'What I can deliver',
+    capabilitiesIntro:
+      'These are the capabilities I want recruiters and clients to find quickly, without turning the portfolio into a job-board checklist.',
+    processTitle: 'Design process',
+    processIntro:
+      'I work from rough material to polished handoff, checking layout quality before anything is considered finished.',
+    resumeTitle: 'Resume',
+    resumeIntro: 'English resume available for recruiters, clients and freelance applications.',
+    openPdf: 'Open PDF',
+    downloadPdf: 'Download PDF',
+    close: 'Close',
+    contactTitle: 'Let’s design something useful.',
+    contactText: 'Send a brief, a rough draft or a product idea. I can help shape it into a web-ready experience.',
+  },
+  es: {
+    nav: ['Trabajos', 'Capacidades', 'Proceso', 'CV'],
+    theme: { dark: 'Oscuro', light: 'Claro' },
+    heroKicker: 'Diseño web / Front-end / QA asistido por IA',
+    heroTitle: 'Experiencias web limpias con una base técnica sólida.',
+    heroText:
+      'Diseño y construyo productos digitales responsivos, landing pages e interfaces que se entienden rápido, se implementan bien y mantienen consistencia visual.',
+    available: 'Disponible para trabajo freelance remoto',
+    primaryCta: 'Ver trabajos',
+    secondaryCta: 'Ver CV',
+    location: 'Bucaramanga, Colombia',
+    english: 'Inglés B2 / TOEFL',
+    degree: 'Ingeniería de Sistemas, 2026',
+    workTitle: 'Casos de diseño web',
+    workIntro:
+      'Productos y prototipos reales que muestran layout, UI responsive, jerarquía visual, criterio de producto y entendimiento de implementación.',
+    capabilitiesTitle: 'Lo que puedo entregar',
+    capabilitiesIntro:
+      'Estas son las capacidades que un reclutador o cliente necesita encontrar rápido, sin que el portafolio parezca una solicitud de empleo pegada encima.',
+    processTitle: 'Proceso de diseño',
+    processIntro:
+      'Trabajo desde material crudo hasta handoff pulido, revisando calidad visual antes de considerar cualquier entrega como terminada.',
+    resumeTitle: 'CV',
+    resumeIntro: 'CV en inglés disponible para reclutadores, clientes y aplicaciones freelance.',
+    openPdf: 'Abrir PDF',
+    downloadPdf: 'Descargar PDF',
+    close: 'Cerrar',
+    contactTitle: 'Diseñemos algo útil.',
+    contactText: 'Envíame un brief, un borrador o una idea de producto. Puedo ayudarte a convertirlo en una experiencia web lista para publicar.',
+  },
+}
+
+const work = [
+  {
+    title: 'GamesTop',
+    image: '/work/gamestop.png',
+    href: 'https://main.d2799uy4ua8s4e.amplifyapp.com/dashboard',
+    kind: { en: 'Product dashboard', es: 'Dashboard de producto' },
+    copy: {
+      en: 'A dark game-discovery interface with search, carousel browsing, auth entry points and high-impact media sections.',
+      es: 'Una interfaz oscura de descubrimiento de videojuegos con búsqueda, carruseles, acceso de usuarios y secciones visuales de alto impacto.',
+    },
+    tags: ['Responsive UI', 'Visual hierarchy', 'React / Next.js', 'Product navigation'],
+  },
+  {
+    title: 'PawCampus',
+    image: '/work/pawcampus.png',
+    href: 'https://www.pawcampusapp.com/',
+    kind: { en: 'Social impact app', es: 'App de impacto social' },
+    copy: {
+      en: 'A web/mobile product concept for campus animal care, QR identification, monitoring and stakeholder coordination.',
+      es: 'Un concepto web/móvil para cuidado animal en campus, identificación QR, monitoreo y coordinación con actores universitarios.',
+    },
+    tags: ['UX/UI', 'Mobile-first thinking', 'Product strategy', 'Social impact'],
+  },
+  {
+    title: 'Buena Vida',
+    image: null,
+    href: `mailto:${contact.email}?subject=Buena%20Vida%20case%20study`,
+    kind: { en: 'Commerce prototype', es: 'Prototipo e-commerce' },
+    copy: {
+      en: 'A natural-products commerce flow designed around catalog clarity, relational data and implementation-ready sections.',
+      es: 'Un flujo de comercio para productos naturales enfocado en claridad de catálogo, datos relacionales y secciones listas para implementar.',
+    },
+    tags: ['Landing flow', 'SQL model', 'Design patterns', 'Full-stack prototype'],
+  },
 ]
 
+const capabilities = [
+  {
+    en: ['Conversion layouts', 'One-pagers, pitch-style landing pages and simple marketing sites with clear hierarchy.'],
+    es: ['Layouts de conversión', 'One-pagers, landing pages tipo pitch y sitios simples de marketing con jerarquía clara.'],
+  },
+  {
+    en: ['Figma systems', 'Reusable components, auto-layout thinking, spacing rules and responsive frames.'],
+    es: ['Sistemas en Figma', 'Componentes reutilizables, auto-layout, reglas de espaciado y frames responsivos.'],
+  },
+  {
+    en: ['Developer handoff', 'Assets, specs and layout notes prepared for developers, Webflow, Framer or no-code workflows.'],
+    es: ['Handoff a desarrollo', 'Assets, specs y notas de layout preparadas para developers, Webflow, Framer o flujos no-code.'],
+  },
+  {
+    en: ['Visual consistency', 'Web pages aligned with PDFs, social visuals and pitch material through systematic QA.'],
+    es: ['Consistencia visual', 'Páginas web alineadas con PDFs, piezas sociales y materiales de pitch mediante QA sistemático.'],
+  },
+]
+
+const process = {
+  en: ['Brief mapping', 'Wireframe rhythm', 'Visual direction', 'Responsive QA', 'Handoff package'],
+  es: ['Lectura del brief', 'Ritmo de wireframe', 'Dirección visual', 'QA responsive', 'Paquete de handoff'],
+}
+
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 }
 
 export default function HomePage() {
+  const [language, setLanguage] = useState<Language>('en')
+  const [theme, setTheme] = useState<Theme>('dark')
+  const [resumeOpen, setResumeOpen] = useState(false)
+
+  const t = content[language]
+  const themeLabel = t.theme[theme]
+  const otherTheme = theme === 'dark' ? 'light' : 'dark'
+
+  const structuredData = useMemo(
+    () => ({
+      name: contact.displayName,
+      role: 'Web Designer & Full-stack Developer',
+      location: t.location,
+      english: t.english,
+    }),
+    [t.english, t.location],
+  )
+
   return (
-    <div className="min-h-screen text-stone-100">
-      <SiteHeader />
-      <HeroSection />
+    <div className={`site-shell theme-${theme} min-h-screen text-[var(--text)]`}>
+      <Header
+        language={language}
+        setLanguage={setLanguage}
+        themeLabel={themeLabel}
+        toggleTheme={() => setTheme(otherTheme)}
+        navItems={t.nav}
+        openResume={() => setResumeOpen(true)}
+      />
 
       <main>
-        <MetricsSection />
-        <ProfileSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <EducationSection />
-        <ContactSection />
+        <Hero t={t} data={structuredData} openResume={() => setResumeOpen(true)} />
+        <WorkSection language={language} t={t} />
+        <CapabilitiesSection language={language} t={t} />
+        <ProcessSection language={language} t={t} />
+        <ResumeSection t={t} openResume={() => setResumeOpen(true)} />
+        <ContactSection t={t} />
       </main>
+
+      {resumeOpen && <ResumeDialog t={t} onClose={() => setResumeOpen(false)} />}
     </div>
   )
 }
 
-function SiteHeader() {
+function Header({
+  language,
+  setLanguage,
+  themeLabel,
+  toggleTheme,
+  navItems,
+  openResume,
+}: {
+  language: Language
+  setLanguage: (language: Language) => void
+  themeLabel: string
+  toggleTheme: () => void
+  navItems: string[]
+  openResume: () => void
+}) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-md">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8">
-        <a href="#inicio" className="font-mono text-sm uppercase tracking-[0.24em] text-stone-200">
-          SL
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--line)] bg-[var(--nav-bg)] backdrop-blur-xl">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
+        <a href="#home" className="font-mono text-sm uppercase tracking-[0.22em]">
+          Sergio Lejarde
         </a>
 
-        <div className="hidden items-center gap-7 text-sm text-stone-400 md:flex">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="transition hover:text-amber-200">
-              {item.label}
-            </a>
-          ))}
+        <div className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] text-[var(--muted)] lg:flex">
+          <a href="#work">{navItems[0]}</a>
+          <a href="#capabilities">{navItems[1]}</a>
+          <a href="#process">{navItems[2]}</a>
+          <button type="button" onClick={openResume} className="transition hover:text-[var(--text)]">
+            {navItems[3]}
+          </button>
         </div>
 
-        <a
-          href={`mailto:${contact.email}`}
-          className="rounded-md border border-amber-200/30 px-4 py-2 text-sm text-amber-100 transition hover:border-amber-100 hover:bg-amber-100 hover:text-black"
-        >
-          Hablemos
-        </a>
+        <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em]">
+          <div className="flex rounded-full border border-[color:var(--line)] p-1">
+            {(['en', 'es'] as const).map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setLanguage(item)}
+                className={`rounded-full px-3 py-1.5 transition ${
+                  language === item ? 'bg-[var(--text)] text-[var(--page-bg-solid)]' : 'text-[var(--muted)]'
+                }`}
+                aria-pressed={language === item}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="rounded-full border border-[color:var(--line)] px-3 py-2 text-[var(--muted)] transition hover:text-[var(--text)]"
+          >
+            {themeLabel}
+          </button>
+        </div>
       </nav>
     </header>
   )
 }
 
-function HeroSection() {
+function Hero({
+  t,
+  data,
+  openResume,
+}: {
+  t: (typeof content)[Language]
+  data: { name: string; role: string; location: string; english: string }
+  openResume: () => void
+}) {
   return (
-    <section id="inicio" className="relative isolate overflow-hidden pt-28">
-      <Image
-        src="/portfolio-signal-map.png"
-        alt="Mapa visual del perfil técnico de Sergio Lejarde"
-        fill
-        priority
-        sizes="100vw"
-        className="absolute inset-0 -z-20 h-full w-full object-cover opacity-35"
-      />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,#050505_0%,rgba(5,5,5,0.9)_34%,rgba(5,5,5,0.62)_68%,rgba(5,5,5,0.9)_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_25%,rgba(208,166,78,0.18),transparent_28%),radial-gradient(circle_at_85%_72%,rgba(72,164,149,0.16),transparent_30%)]" />
+    <section id="home" className="relative min-h-[88svh] overflow-hidden px-4 pb-12 pt-24 md:px-8 md:pt-28">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,var(--hero-glow),transparent_38%),linear-gradient(180deg,transparent,rgba(0,0,0,0.12))]" />
 
-      <div className="mx-auto grid min-h-[78svh] max-w-7xl content-center px-5 pb-20 md:px-8">
-        <motion.div
+      <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.7, ease: 'easeOut' }}>
+          <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--muted)]">{t.heroKicker}</p>
+          <h1 className="mt-7 max-w-4xl text-4xl font-semibold leading-[1.04] tracking-normal sm:text-5xl lg:text-6xl">
+            {t.heroTitle}
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--soft)] md:text-xl md:leading-9">{t.heroText}</p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#work"
+              className="rounded-full bg-[var(--text)] px-5 py-3 text-sm font-medium text-[var(--page-bg-solid)] transition hover:scale-[1.02]"
+            >
+              {t.primaryCta}
+            </a>
+            <button
+              type="button"
+              onClick={openResume}
+              className="rounded-full border border-[color:var(--line-strong)] px-5 py-3 text-sm font-medium transition hover:border-[color:var(--text)]"
+            >
+              {t.secondaryCta}
+            </button>
+          </div>
+        </motion.div>
+
+        <motion.aside
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          transition={{ duration: 0.65, ease: 'easeOut' }}
-          className="max-w-4xl"
+          transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+          className="rounded-3xl border border-[color:var(--line)] bg-[var(--panel)] p-5 shadow-[var(--shadow)] md:p-7"
         >
-          <p className="mb-5 font-mono text-xs uppercase tracking-[0.28em] text-amber-200">
-            {contact.location} / remoto
-          </p>
-          <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] text-stone-50 sm:text-6xl md:text-7xl">
-            {contact.displayName}
-          </h1>
-          <p className="mt-6 max-w-3xl text-xl leading-8 text-stone-300 md:text-2xl md:leading-9">
-            Desarrollador full-stack e ingeniero de sistemas enfocado en productos web,
-            automatización, cloud y flujos de IA que necesitan criterio humano antes de llegar a producción.
-          </p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#proyectos"
-              className="rounded-md bg-stone-100 px-5 py-3 text-center text-sm font-medium text-black transition hover:bg-amber-200"
-            >
-              Ver proyectos
-            </a>
-            <a
-              href={contact.cv}
-              download
-              className="rounded-md border border-white/20 px-5 py-3 text-center text-sm font-medium text-stone-100 transition hover:border-teal-200 hover:text-teal-100"
-            >
-              Descargar CV
-            </a>
+          <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[var(--page-bg-soft)] p-5">
+            <div className="flex h-full flex-col justify-between">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--muted)]">{data.name}</p>
+                <p className="mt-4 text-2xl font-semibold">{data.role}</p>
+              </div>
+              <div className="grid gap-3 border-t border-[color:var(--line)] pt-5 font-mono text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
+                <p>{data.location}</p>
+                <p>{data.english}</p>
+                <p>{t.degree}</p>
+                <p>{t.available}</p>
+              </div>
+            </div>
           </div>
-
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 font-mono text-sm text-stone-400">
-            <a className="hover:text-amber-200" href={`mailto:${contact.email}`}>
-              {contact.email}
-            </a>
-            <a className="hover:text-amber-200" href={contact.github} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            <a className="hover:text-amber-200" href={contact.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn
-            </a>
-          </div>
-        </motion.div>
+        </motion.aside>
       </div>
     </section>
   )
 }
 
-function MetricsSection() {
+function WorkSection({ language, t }: { language: Language; t: (typeof content)[Language] }) {
   return (
-    <section aria-label="Indicadores principales" className="border-y border-white/10 bg-stone-950/80">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-5 py-px md:grid-cols-4 md:px-8">
-        {metrics.map((metric) => (
-          <div key={metric.label} className="min-h-32 bg-black/40 px-4 py-6">
-            <p className="font-mono text-3xl text-amber-200">{metric.value}</p>
-            <p className="mt-3 text-sm leading-6 text-stone-400">{metric.label}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function ProfileSection() {
-  return (
-    <Section id="perfil" eyebrow="Perfil" title="Construyo sistemas útiles, verificables y fáciles de operar.">
-      <div className="grid gap-5 md:grid-cols-3">
-        {strengths.map((item) => (
-          <article key={item.title} className="rounded-lg border border-white/10 bg-stone-950/70 p-6">
-            <h3 className="text-lg font-medium text-stone-100">{item.title}</h3>
-            <p className="mt-4 text-sm leading-7 text-stone-400">{item.description}</p>
-          </article>
-        ))}
-      </div>
-
-      <div className="mt-12 grid gap-8 border-t border-white/10 pt-10 lg:grid-cols-[0.85fr_1.15fr]">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-teal-200">Enfoque</p>
-          <h3 className="mt-4 text-2xl font-semibold text-stone-100">Perfil mixto entre producto, ingeniería e IA aplicada.</h3>
-        </div>
-        <p className="text-base leading-8 text-stone-300">
-          Mi trabajo combina desarrollo web, arquitectura de software, automatización, análisis de datos y evaluación de
-          modelos de IA. Me interesa especialmente crear herramientas que resuelvan problemas concretos: desde plataformas
-          para clientes y negocios pequeños hasta flujos de verificación donde la precisión importa.
-        </p>
-      </div>
-    </Section>
-  )
-}
-
-function ExperienceSection() {
-  return (
-    <Section id="experiencia" eyebrow="Experiencia" title="Trabajo en entornos donde el código debe responder a contexto real.">
-      <div className="space-y-5">
-        {experience.map((item, index) => (
+    <Section id="work" label="01" title={t.workTitle} intro={t.workIntro}>
+      <div className="grid gap-5">
+        {work.map((item, index) => (
           <motion.article
-            key={`${item.role}-${item.company}`}
+            key={item.title}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
+            viewport={{ once: true, margin: '-120px' }}
             variants={fadeUp}
-            transition={{ duration: 0.45, delay: index * 0.05 }}
-            className="grid gap-6 rounded-lg border border-white/10 bg-black/35 p-6 md:grid-cols-[0.35fr_0.65fr]"
+            transition={{ duration: 0.5, delay: index * 0.08 }}
+            className="group grid overflow-hidden rounded-3xl border border-[color:var(--line)] bg-[var(--panel)] lg:grid-cols-[0.95fr_1.05fr]"
           >
-            <div>
-              <p className="font-mono text-sm text-amber-200">{item.period}</p>
-              <p className="mt-3 text-sm text-stone-500">{item.location}</p>
+            <div className="relative min-h-64 overflow-hidden bg-[var(--page-bg-soft)]">
+              {item.image ? (
+                <Image
+                  src={item.image}
+                  alt={`${item.title} interface screenshot`}
+                  fill
+                  sizes="(min-width: 1024px) 46vw, 100vw"
+                  className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                />
+              ) : (
+                <div className="flex h-full min-h-64 items-center justify-center p-8 text-center font-mono text-xs uppercase tracking-[0.22em] text-[var(--muted)]">
+                  Case preview available on request
+                </div>
+              )}
             </div>
-            <div>
-              <h3 className="text-xl font-semibold text-stone-100">{item.role}</h3>
-              <p className="mt-1 text-sm text-teal-200">{item.company}</p>
-              <p className="mt-4 leading-7 text-stone-300">{item.summary}</p>
-              <ul className="mt-5 space-y-3 text-sm leading-6 text-stone-400">
-                {item.highlights.map((highlight) => (
-                  <li key={highlight} className="border-l border-white/15 pl-4">
-                    {highlight}
-                  </li>
-                ))}
-              </ul>
+            <div className="flex flex-col justify-between p-6 md:p-8">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--muted)]">{item.kind[language]}</p>
+                <h3 className="mt-5 text-3xl font-semibold md:text-4xl">{item.title}</h3>
+                <p className="mt-5 max-w-2xl leading-8 text-[var(--soft)]">{item.copy[language]}</p>
+              </div>
+              <div className="mt-8">
+                <div className="flex flex-wrap gap-2">
+                  {item.tags.map((tag) => (
+                    <span key={tag} className="rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs text-[var(--muted)]">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={item.href}
+                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                  rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                  className="mt-7 inline-flex text-sm font-medium underline underline-offset-4"
+                >
+                  {language === 'en' ? 'Open project' : 'Abrir proyecto'}
+                </a>
+              </div>
             </div>
           </motion.article>
         ))}
@@ -217,139 +365,132 @@ function ExperienceSection() {
   )
 }
 
-function ProjectsSection() {
+function CapabilitiesSection({ language, t }: { language: Language; t: (typeof content)[Language] }) {
   return (
-    <Section id="proyectos" eyebrow="Proyectos" title="Casos que muestran producto, arquitectura, datos e impacto social.">
-      <div className="grid gap-5 lg:grid-cols-2">
-        {projects.map((project) => (
-          <article key={project.name} className="rounded-lg border border-white/10 bg-stone-950/70 p-6">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-teal-200">{project.type}</p>
-                <h3 className="mt-3 text-2xl font-semibold text-stone-100">{project.name}</h3>
-              </div>
-              <p className="rounded-md border border-amber-200/20 px-3 py-1 font-mono text-xs text-amber-200">{project.year}</p>
-            </div>
-
-            <p className="mt-5 leading-7 text-stone-300">{project.description}</p>
-            <p className="mt-4 text-sm leading-6 text-stone-500">{project.impact}</p>
-
-            <div className="mt-6 flex flex-wrap gap-2">
-              {project.stack.map((item) => (
-                <span key={item} className="rounded-md border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-stone-300">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function SkillsSection() {
-  return (
-    <Section id="stack" eyebrow="Stack" title="Herramientas organizadas por el tipo de problema que resuelven.">
-      <div className="grid gap-5 md:grid-cols-2">
-        {skillGroups.map((group) => (
-          <article key={group.title} className="rounded-lg border border-white/10 bg-black/35 p-6">
-            <h3 className="text-lg font-medium text-stone-100">{group.title}</h3>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span key={item} className="rounded-md bg-stone-900 px-3 py-2 text-sm text-stone-300 ring-1 ring-white/10">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function EducationSection() {
-  return (
-    <Section id="formacion" eyebrow="Formación" title="Base académica, certificaciones y liderazgo.">
-      <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="space-y-5">
-          {education.map((item) => (
-            <article key={`${item.title}-${item.period}`} className="rounded-lg border border-white/10 bg-stone-950/70 p-6">
-              <p className="font-mono text-sm text-amber-200">{item.period}</p>
-              <h3 className="mt-3 text-xl font-semibold text-stone-100">{item.title}</h3>
-              <p className="mt-1 text-sm text-teal-200">{item.institution}</p>
-              <p className="mt-4 text-sm leading-7 text-stone-400">{item.details}</p>
+    <Section id="capabilities" label="02" title={t.capabilitiesTitle} intro={t.capabilitiesIntro}>
+      <div className="grid gap-px overflow-hidden rounded-3xl border border-[color:var(--line)] bg-[var(--line)] md:grid-cols-2">
+        {capabilities.map((item) => {
+          const [title, copy] = item[language]
+          return (
+            <article key={title} className="bg-[var(--panel)] p-6 md:p-8">
+              <h3 className="text-2xl font-semibold">{title}</h3>
+              <p className="mt-4 leading-7 text-[var(--soft)]">{copy}</p>
             </article>
-          ))}
-        </div>
-
-        <aside className="rounded-lg border border-white/10 bg-black/35 p-6">
-          <h3 className="text-xl font-semibold text-stone-100">Liderazgo e intereses</h3>
-          <ul className="mt-5 space-y-4 text-sm leading-7 text-stone-400">
-            {leadership.map((item) => (
-              <li key={item} className="border-l border-teal-200/30 pl-4">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </aside>
+          )
+        })}
       </div>
     </Section>
   )
 }
 
-function ContactSection() {
+function ProcessSection({ language, t }: { language: Language; t: (typeof content)[Language] }) {
   return (
-    <section id="contacto" className="border-t border-white/10 bg-stone-100 text-black">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 md:px-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-stone-600">Contacto</p>
-          <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">Hablemos de producto, código o IA aplicada.</h2>
-        </div>
+    <Section id="process" label="03" title={t.processTitle} intro={t.processIntro}>
+      <div className="grid gap-3 md:grid-cols-5">
+        {process[language].map((step, index) => (
+          <div key={step} className="rounded-3xl border border-[color:var(--line)] bg-[var(--panel)] p-5">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">0{index + 1}</p>
+            <p className="mt-10 text-xl font-semibold">{step}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  )
+}
 
-        <div className="grid gap-4 text-sm sm:grid-cols-2">
-          <ContactLink label="Email" value={contact.email} href={`mailto:${contact.email}`} />
-          <ContactLink label="Teléfono" value={contact.phone} href={`tel:${contact.phone.replace(/\s/g, '')}`} />
-          <ContactLink label="GitHub" value="github.com/sergiolejarde" href={contact.github} />
-          <ContactLink label="LinkedIn" value="linkedin.com/in/sergio-lejarde" href={contact.linkedin} />
+function ResumeSection({ t, openResume }: { t: (typeof content)[Language]; openResume: () => void }) {
+  return (
+    <Section id="resume" label="04" title={t.resumeTitle} intro={t.resumeIntro}>
+      <div className="rounded-3xl border border-[color:var(--line)] bg-[var(--panel)] p-6 md:flex md:items-center md:justify-between md:p-8">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">{contact.name}</p>
+          <p className="mt-3 text-2xl font-semibold">Web Designer & Full-stack Developer</p>
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3 md:mt-0">
+          <button
+            type="button"
+            onClick={openResume}
+            className="rounded-full bg-[var(--text)] px-5 py-3 text-sm font-medium text-[var(--page-bg-solid)]"
+          >
+            {t.openPdf}
+          </button>
+          <a href={contact.cv} download className="rounded-full border border-[color:var(--line-strong)] px-5 py-3 text-sm font-medium">
+            {t.downloadPdf}
+          </a>
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+function ContactSection({ t }: { t: (typeof content)[Language] }) {
+  return (
+    <section id="contact" className="px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-[color:var(--line)] bg-[var(--inverse-panel)] p-6 text-[var(--inverse-text)] md:p-10 lg:grid-cols-[1fr_420px]">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.22em] opacity-60">Contact</p>
+          <h2 className="mt-6 max-w-2xl text-4xl font-semibold leading-tight md:text-6xl">{t.contactTitle}</h2>
+          <p className="mt-6 max-w-xl leading-8 opacity-75">{t.contactText}</p>
+        </div>
+        <div className="self-end divide-y divide-current/20 border-y border-current/20 font-mono text-sm">
+          <a className="block py-5" href={`mailto:${contact.email}`}>
+            {contact.email}
+          </a>
+          <a className="block py-5" href={contact.linkedin} target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+          <a className="block py-5" href={contact.github} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
         </div>
       </div>
     </section>
   )
 }
 
-function ContactLink({ label, value, href }: { label: string; value: string; href: string }) {
+function ResumeDialog({ t, onClose }: { t: (typeof content)[Language]; onClose: () => void }) {
   return (
-    <a
-      href={href}
-      target={href.startsWith('http') ? '_blank' : undefined}
-      rel={href.startsWith('http') ? 'noreferrer' : undefined}
-      className="rounded-lg border border-black/10 bg-white p-5 transition hover:-translate-y-0.5 hover:border-black hover:shadow-[0_12px_35px_rgba(0,0,0,0.12)]"
-    >
-      <span className="font-mono text-xs uppercase tracking-[0.18em] text-stone-500">{label}</span>
-      <span className="mt-3 block break-words text-base font-medium text-black">{value}</span>
-    </a>
+    <div className="fixed inset-0 z-[80] bg-black/70 p-3 backdrop-blur-md md:p-6" role="dialog" aria-modal="true">
+      <div className="mx-auto flex h-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-white/20 bg-zinc-950 text-white shadow-2xl">
+        <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 md:px-5">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-400">{t.resumeTitle}</p>
+          <div className="flex items-center gap-2">
+            <a href={contact.cv} target="_blank" rel="noreferrer" className="rounded-full border border-white/15 px-3 py-2 text-xs">
+              {t.openPdf}
+            </a>
+            <button type="button" onClick={onClose} className="rounded-full bg-white px-3 py-2 text-xs text-black">
+              {t.close}
+            </button>
+          </div>
+        </div>
+        <iframe src={contact.cv} title="Sergio Lejarde resume" className="h-full w-full bg-white" />
+      </div>
+    </div>
   )
 }
 
 function Section({
   id,
-  eyebrow,
+  label,
   title,
+  intro,
   children,
 }: {
   id: string
-  eyebrow: string
+  label: string
   title: string
+  intro: string
   children: React.ReactNode
 }) {
   return (
-    <section id={id} className="border-t border-white/10 bg-[#080807]">
-      <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
-        <div className="mb-12 grid gap-6 lg:grid-cols-[0.35fr_0.65fr]">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-amber-200">{eyebrow}</p>
-          <h2 className="max-w-4xl text-3xl font-semibold leading-tight text-stone-100 md:text-5xl">{title}</h2>
+    <section id={id} className="px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-12 grid gap-5 md:grid-cols-[160px_1fr]">
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-[var(--muted)]">{label}</p>
+          <div>
+            <h2 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">{title}</h2>
+            <p className="mt-5 max-w-2xl leading-8 text-[var(--soft)]">{intro}</p>
+          </div>
         </div>
         {children}
       </div>

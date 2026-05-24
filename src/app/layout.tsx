@@ -3,12 +3,15 @@ import './global.css'
 import NoiseBackground from '@/components/NoiseBackground'
 
 export const metadata: Metadata = {
-  title: 'Sergio Lejarde | Full-stack Developer',
+  title: 'Sergio Lejarde | Web Designer & Full-stack Developer',
   description:
-    'Portafolio de Sergio Lejarde: desarrollo full-stack, automatización, IA aplicada, cloud, proyectos académicos y soluciones para clientes.',
+    'Portfolio of Sergio Lejarde: web design, responsive UI, full-stack development, AI-assisted workflows and production-ready digital experiences.',
   keywords: [
     'Sergio Lejarde',
     'full-stack developer',
+    'web designer',
+    'UI design',
+    'Figma',
     'portfolio',
     'Next.js',
     'React',
@@ -17,8 +20,8 @@ export const metadata: Metadata = {
     'Bucaramanga',
   ],
   openGraph: {
-    title: 'Sergio Lejarde | Full-stack Developer',
-    description: 'Portafolio profesional, experiencia, proyectos y stack técnico.',
+    title: 'Sergio Lejarde | Web Designer & Full-stack Developer',
+    description: 'Professional portfolio with web design examples, experience and technical capabilities.',
     url: 'https://www.sergiolejarde.com',
     siteName: 'Sergio Lejarde Portfolio',
     locale: 'es_CO',
