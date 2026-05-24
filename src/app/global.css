@@ -1,53 +1,60 @@
-/* 🎯 Cargamos la fuente monoespaciada usada en el sitio de Keita (o muy similar) */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
-/* 🛠️ Cargamos las capas base de Tailwind CSS (requerido para que funcione) */
-@tailwind base;        /* Reset de estilos predeterminados del navegador + tipografías base */
-@tailwind components;  /* Componentes reutilizables si defines algunos en Tailwind */
-@tailwind utilities;   /* Clases utilitarias como bg-black, text-white, p-4, etc */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* 🧱 Estilos generales para todo el body de la página */
+:root {
+  color-scheme: dark;
+  --background: #050505;
+  --foreground: #f5f1e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
+}
+
 body {
-  @apply bg-black;       /* Fondo completamente negro, como el sitio de Keita */
-  @apply text-white;     /* Color de texto blanco para contraste fuerte */
-  @apply font-mono;      /* Fuente monoespaciada para estilo retro / técnico */
-  overflow-x: hidden;    /* Evita que aparezca scroll horizontal si algo se desborda */
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 1)),
+    var(--background);
+  color: var(--foreground);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 🎚️ Personalizamos la barra de desplazamiento en navegadores tipo WebKit (Chrome, Edge, etc) */
+::selection {
+  background: rgba(244, 203, 118, 0.28);
+  color: #fff7dc;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;               /* Ancho del scrollbar */
+  width: 10px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #111;         /* Color del fondo del scroll (gris muy oscuro) */
+  background: #050505;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #666;         /* Color del "pulgar" (parte móvil del scroll) */
-  border-radius: 8px;       /* Bordes redondeados para un look más moderno */
+  background: #3f3d35;
+  border: 2px solid #050505;
+  border-radius: 8px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #999;         /* Color del "pulgar" cuando el mouse pasa por encima */
+  background: #817963;
 }
 
-/* ✨ Aquí podríamos definir animaciones globales (como ruido, glitch, etc.) más adelante */
-/* Por ejemplo: keyframes para glitch o animaciones tipo static TV effect */
-
-/*global.css es el archivo donde definimos los estilos globales que aplican a toda tu app. Aunque usamos Tailwind (que te da utilidades de CSS ya hechas), global.css sigue siendo muy útil para cosas como:
-
-Uso de global.css	Ejemplos:
-Importar fuentes	Google Fonts como IBM Plex Mono
-Estilos base:	Color de fondo general, scrollbars, etc.
-Configuración Tailwind:	@tailwind base, components, utilities
-Animaciones globales: Keyframes que usaremos con clases de Tailwind extendidas*/
-
-/*¿Usarlo es profesional?
-Sí. Incluso en proyectos grandes con Tailwind, siempre hay un global.css. No abusamos de él (no vamos a escribir estilos específicos como .boton-verde), pero sí lo usamos para estilos que deben aplicarse a todo el sitio o para inicializar cosas.*/
-
-/*¿Qué conseguimos con este global.css?
-✅ Fondo oscuro y texto blanco
-✅ Tipografía monoespaciada profesional (como Keita)
-✅ Scroll minimalista
-✅ Estilo visual coherente en toda la app
-✅ Base limpia para aplicar animaciones después*/
-
-/*este es el archivo #1 que vamos a tocar para empezar a hacer esta app, vamos a seguir nombrando los demas archivos que programemos en ese orden*/
+.font-mono {
+  font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
