@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className="bg-black">
-      <body>
+    <html lang="es" className="bg-[#150133]">
+      <body className="bg-[#150133] text-purple-50">
         <NoiseBackground />
         <div className="relative z-10">{children}</div>
       </body>
